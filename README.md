@@ -1,84 +1,80 @@
-# Iteration-of-Black-and-White
+# Iteration of Black and White
 
-## Game rules
-* Click on any block on the control panel, and the block itself and the four adjacent blocks (above, below, left, and right) will change color (from white to black or from black to white).</br>
-* You should complete the target pattern through the above-mentioned operation.</br>
-* Each level has a limited time. If you exceed the limited time, it will be considered a failure.</br>
-* After 5 failed attempts, you will have an opportunity to watch the best solution.</br>
+A terminal puzzle game inspired by *Lights Out*. Players transform a binary board into a target pattern by toggling cells, racing against a time limit while trying to match the shortest known solution.
 
-### Here is a basic operation:
-```
-      012                                               012
-   
-   0  101                                            0  101
-   1  000    After clicking (2,2)#(row,column)--->   1  001
-   2  101                                            2  110
+## Game rule
+
+Selecting a cell flips the selected cell and its neighbors above, below, left, and right. The objective is to make the left board match the target shown on the right.
+
+```text
+Before       After selecting (2, 2)
+101          101
+000          001
+101          110
 ```
 
-### Here is an example:
+## Features
+
+- interactive terminal interface using Python `curses`;
+- mouse and keyboard input;
+- Easy (5×5), Medium (7×7), and Hard (9×9) boards;
+- 15 missions per difficulty level;
+- countdown timer and failure handling;
+- reset and single-step undo;
+- persistent top-three completion times;
+- best-solution hints after repeated attempts;
+- tutorial, scoreboard, and hidden completion content.
+
+## Requirements
+
+- Python 3
+- a terminal with color, mouse, and `curses` support
+
+On Linux and macOS, `curses` is normally included. On Windows, install `windows-curses`:
+
+```bash
+pip install windows-curses
 ```
-   the initial pattern:             the target pattern:
-      01234                              01234
 
-   0  11111                           0  10101
-   1  11111                           1  00000
-   2  11111                           2  11111
-   3  11111                           3  10101
-   4  11111                           4  11011
+## Run
 
- To complete the target pattern,the best solution is:
- (1,1)(1,3)(2,2)(3,2)#(row,column)
+```bash
+git clone https://github.com/LittleLisa18/Iteration-of-Black-and-White.git
+cd Iteration-of-Black-and-White
+python3 main.py
 ```
 
-## Let's play!
-### Attention: Before starting the game
-* Please make your terminal as large as possible to ensure all the pictures are visible. 
-* If you still can't view the full image, try shrinking browser fonts.
-* After entering the game, you can press 'q' at any time to get back to the previous interface.
-  
-### Start the game
-* Type a command line in the terminal: python3 final_version5.py
-* notice: The relative path must be the program path.
-* You'll get into the interface of our game. Then click any button to enter.
+Use a large terminal window so both boards and controls remain visible.
 
-### Enter the game
-* Please follow the instructions on the game interface.
-* First you can see four options**(please choose by using arrow key and Enter key):
-  * play: begin to play the game
-  * scoreboard: You can view the three shortest time taken of each task.
-  * tutorial: check the detailed game rules
-  * exit: quit the game
-        
-#### If you choose 'tutorial':
-* You will first get to know the basic operation and the rules of our game.
-* If you want to gain a deeper insight into the game, you can click the button 'Click to access an example' to see the best solution of a task.
+## Controls
 
-#### If you choose 'scoreboard':
-* You will see the three shortest time taken arranged in ascending order in a list after the number of each task, i.e. The first one is the record(the best performance) of the task.
-* You can check the record of each task and see your rank. You can try to break the record or compete with your friends.
-* e.g. 1#the task number       [1,2,3]#the three shortest time taken         #the record of task 1 is 1 second.  
+| Input | Action |
+| --- | --- |
+| Arrow keys + Enter | Navigate menus |
+| Mouse click | Select a menu item or board cell |
+| Space | Enter a cell using row and column coordinates |
+| `r` | Reset the current board |
+| `w` | Undo the previous move |
+| `b` | Request the best solution when available |
+| `q` | Return to the previous screen |
 
-#### If you choose 'play':
-* Then you can select the level of difficulty from easy(5*5 board), medium(7*7 board) and hard(9*9 board).
-* Each level contains 15 tasks which you can choose at will.  **(choose the level and the task by using arrow key and Enter key)
+## Difficulty and scoring
 
-### Once the task is selected, the game starts. 
-* Please operate on the left-hand board to complete the pattern on the right-hand side. Each level has a limited time. 
-* The remaining time is displayed at the top of the right-hand board.
-* There are four buttons on the right side of the interface:
-  * close (press q): close the game.
-  * reset (press r): reset the board.
-  * best solution (press b): show best solution.(The number of attempts required to view the best solution can be seen below the button.)
-  * withdraw (press w): withdraw the last step. 
-*  If you exceed the limited time, it will be considered a failure. After each failure, you can decide whether to continue or not. Press 'y' to have another attempt, 'n' to stop trying. After 5 failed attempts, you will have an opportunity to watch the best solution.
-*  If you completed the task but you didn't find the best solution, you will be rewarded by Kit and get back to the menu.
-*  If you completed the task with the best solution, you can access the wonderful egg we prepared for you. Congratulations!         
+Each difficulty contains 15 missions. A mission is completed when the current board matches its target before time expires. Completion times are saved in `scoreboard.txt`, where the three fastest results for each mission are retained.
 
+After five failed attempts, the best-solution view is unlocked. Completing a mission with the optimal sequence also unlocks a special reward screen.
 
-#### You have two ways to play the game:
-* simply click the block with your mouse.
-* press the space and then you can input the row index and column index of the block respectively.(The horizontal and vertical coordinate numbers are displayed at the top and on the left sides of the left-hand panel, respectively.)
-  * note: 1)For the best experience, it is recommended to use mouse for gaming whenever possible.
-  * 2)You'd better avoid using the touchpad for gaming.
+## Repository structure
 
-# Wish you have fun!
+| Path | Description |
+| --- | --- |
+| `main.py` | Game logic, UI, input threads, timer, and menu flow |
+| `Image/` | ASCII frames and terminal visual assets |
+| `scoreboard.txt` | Persistent mission records |
+| `scoreboard_init.py` | Scoreboard initialization helper |
+
+## Troubleshooting
+
+- If the layout is clipped, maximize the terminal or reduce its font size.
+- If mouse input is unavailable, use keyboard coordinate-entry mode.
+- Run from the repository root so relative asset paths resolve correctly.
